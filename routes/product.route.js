@@ -1,5 +1,7 @@
 const express = require('express');
 
+const { validateToken } = require('../JWT');
+
 const {
     getProducts,
     getProductById,
@@ -10,10 +12,10 @@ const {
 
 const router = express.Router();
 
-router.get('/products', getProducts);
-router.get('/products/:id', getProductById);
-router.post('/products', createProduct);
-router.put('/products/:id', updateProduct);
-router.delete('/products/:id', deleteProduct);
+router.get('/products', validateToken, getProducts);
+router.get('/products/:id', validateToken, getProductById);
+router.post('/products', validateToken, createProduct);
+router.put('/products/:id', validateToken, updateProduct);
+router.delete('/products/:id', validateToken, deleteProduct);
 
 module.exports = router;
