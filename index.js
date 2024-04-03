@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const productRoute = require('./routes/product.route');
-const authRoute = require('./routes/auth.route');
-const errorMiddleware = require('./middleware/errorMiddleware');
+const productRoute = require('./src/routes/product.route');
+const userRoute = require('./src/routes/user.route');
+const errorMiddleware = require('./src/middleware/errorMiddleware');
 const MONGO_URL = process.env.MONGO_URL;
 const PORT = process.env.PORT;
 const CONNECTION_ALLOWED = process.env.CONNECTION_ALLOWED
@@ -26,7 +26,7 @@ app.use(cors(corsOptions));
 //routes
 
 app.use('/api', productRoute);
-app.use('/api', authRoute);
+app.use('/api', userRoute);
 
 app.use(errorMiddleware);
 

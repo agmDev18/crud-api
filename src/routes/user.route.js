@@ -1,11 +1,11 @@
 const express = require('express');
 
-const { validateToken } = require('../JWT');
+const { validateToken } = require('../middleware/authenticateMiddleware');
 const {
     register,
     login,
     logout
-} = require('../controllers/auth.controller');
+} = require('../controllers/user.controller');
 
 const router = express.Router();
 

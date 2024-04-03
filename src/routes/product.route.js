@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { validateToken } = require('../JWT');
+const { validateToken } = require('../middleware/authenticateMiddleware');
 
 const {
     getProducts,
