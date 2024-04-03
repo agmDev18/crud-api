@@ -50,7 +50,7 @@ const login = asyncHandler(async (req, res) => {
         maxAge: 600000
     });
 
-    res.status(200).json('logged in');
+    res.status(200).json({ name: user.name, email: user.email });
 });
 
 const logout = asyncHandler((req, res) => {
@@ -62,8 +62,37 @@ const logout = asyncHandler((req, res) => {
     }
 });
 
+const edit = asyncHandler(async (req, res) => {
+    const currentUser = res.locals.user;
+
+    const { name, email, password } = req.body;
+
+    if (password) {
+        bcrypt.hash(password, 10).then(async (hash) => {
+            await User.findByIdAndUpdate(currentUser.id,
+                {
+                    name: name,
+                    email: email,
+                    password: hash
+                });
+        });
+    } else {
+        await User.findByIdAndUpdate(currentUser.id, req.body);
+    }
+
+
+
+    const userUpdated = await User.findById(currentUser.id);
+    if (userUpdated) {
+        res.status(200).json(userUpdated);
+    } else {
+        throw new Error(`it coudn't update user`);
+    }
+});
+
 module.exports = {
     register,
     login,
-    logout
+    logout,
+    edit
 }
