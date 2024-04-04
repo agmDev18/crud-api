@@ -80,8 +80,6 @@ const edit = asyncHandler(async (req, res) => {
         await User.findByIdAndUpdate(currentUser.id, req.body);
     }
 
-
-
     const userUpdated = await User.findById(currentUser.id);
     if (userUpdated) {
         res.status(200).json(userUpdated);
@@ -90,9 +88,17 @@ const edit = asyncHandler(async (req, res) => {
     }
 });
 
+const deleteUser = asyncHandler(async (req, res) => {
+
+    const currentUser = res.locals.user;
+    const user = await User.findByIdAndDelete(currentUser.id);
+    res.status(200).json({ name: user.name, email: user.email });
+});
+
 module.exports = {
     register,
     login,
     logout,
-    edit
+    edit,
+    deleteUser
 }
